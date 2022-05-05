@@ -19,12 +19,12 @@ class UsersController {
     try {
       const { email } = req.query;
       if (email) {
-        const users = await User.findAll({ where: { email: { [Op.like]: `%${email}%` } } });
+        const users = await User.findAll({ attributes: ['id', 'name', 'email'] }, { where: { email: { [Op.like]: `%${email}%` } } });
         if (users.length === 0) return res.status(404).json({ error: 'User not found' });
 
         return res.status(200).json(users);
       }
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ['id', 'name', 'email'] });
       if (users.length === 0) return res.status(404).json({ error: 'User not found' });
 
       res.status(200).json(users);
@@ -37,8 +37,11 @@ class UsersController {
   async show(req, res) {
     try {
       const { id } = req.params;
+      const { authorization } = req.headers;
       const user = await User.findByPk(id);
       if (!user) return res.status(404).json({ error: 'User not found' });
+
+      if (authorization !== `Bearer ${user.token}`) return res.status(401).json({ error: 'Token invalid' });
 
       res.status(200).json(user);
     } catch (err) {

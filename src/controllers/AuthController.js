@@ -11,11 +11,11 @@ class AuthController {
       if (!user) return res.status(400).json({ error: 'User not found' });
       if (!(await user.checkPassword(password))) return res.status(400).json({ error: 'Password does not match' });
 
-      const token = jwt.sign(
-        { id: user.id },
-        process.env.TOKEN_SECRET,
-        { expiresIn: process.env.TOKEN_EXPIRES },
-      );
+      const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRES });
+
+      console.log(token.split('.').slice(-1).toString(), '\n\n\n\n');
+
+      await User.update({ token }, { where: { id: user.id } });
 
       res.status(200).json({ token });
     } catch (err) {

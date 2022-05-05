@@ -38,6 +38,10 @@ export default class User extends Model {
             },
           },
         },
+        token: {
+          type: Sequelize.STRING,
+          defaultValue: '',
+        },
       },
       {
         sequelize,
