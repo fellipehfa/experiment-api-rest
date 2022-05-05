@@ -13,8 +13,6 @@ class AuthController {
 
       const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRES });
 
-      console.log(token.split('.').slice(-1).toString(), '\n\n\n\n');
-
       await User.update({ token }, { where: { id: user.id } });
 
       res.status(200).json({ token });

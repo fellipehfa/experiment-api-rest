@@ -55,14 +55,37 @@ class UsersController {
       const { id } = req.params;
       if (!id) return res.status(400).json({ error: 'Id is required' });
 
+      const { name, email, password } = req.body;
       const user = await User.findByPk(id);
       if (!user) return res.status(404).json({ error: 'User not found' });
 
-      const { name, email, password } = req.body;
       user.name = name !== undefined ? name : user.name;
       user.email = email !== undefined ? email : user.email;
       user.password = password !== undefined ? password : user.password;
       await user.save();
+
+      res.status(200).json(user);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: err });
+    }
+  }
+
+  async softDelete(req, res) {
+    try {
+      const { id } = req.params;
+      const { authorization } = req.headers;
+      const { password } = req.body;
+
+      if (!id) return res.status(400).json({ error: 'Id is required' });
+
+      const user = await User.findByPk(id);
+      if (!user) return res.status(404).json({ error: 'User not found' });
+      if (!(await user.checkPassword(password))) return res.status(400).json({ error: 'Password does not match' });
+
+      if (authorization !== `Bearer ${user.token}`) return res.status(401).json({ error: 'Token invalid' });
+
+      await User.update({ active: false }, { where: { id: user.id } });
 
       res.status(200).json(user);
     } catch (err) {
