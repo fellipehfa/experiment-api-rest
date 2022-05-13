@@ -18,5 +18,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'consistent-return': 'off',
     'max-len': 'off',
+    'object-curly-newline': 'off',
   },
 };

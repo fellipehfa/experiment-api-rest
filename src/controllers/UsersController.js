@@ -4,7 +4,6 @@ import User from '../models/User';
 class UsersController {
   async create(req, res) {
     try {
-      const { name, email, password } = req.body;
       const newUser = req.body;
 
       await User.create(newUser);
@@ -87,7 +86,7 @@ class UsersController {
 
       await User.update({ active: false }, { where: { id: user.id } });
 
-      res.status(200).json(user);
+      res.status(200).json({ message: 'User inactivated' });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ error: err });
