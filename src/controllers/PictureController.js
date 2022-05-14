@@ -1,7 +1,15 @@
+import multer from 'multer';
+import multerConfig from '../config/multer';
+
+const upload = multer(multerConfig).single('picture');
+
 class PictureController {
   async create(req, res) {
-    const { file } = req;
-    res.status(200).json({ file, message: 'Picture uploaded successfully!' });
+    return upload(req, res, async (err) => {
+      if (err) res.status(400).json({ error: err.code });
+
+      res.json(req.file);
+    });
   }
 }
 
