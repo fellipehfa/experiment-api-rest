@@ -6,12 +6,12 @@ module.exports = {
       'students',
       [
         {
-          first_name: 'Joe',
+          first_name: 'Joey',
           last_name: 'Tribiani',
           age: 30,
           weight: 85,
           height: 1.78,
-          email: 'joe@email.com',
+          email: 'joey@email.com',
           created_at: new Date(),
           updated_at: new Date(),
         },
@@ -61,7 +61,7 @@ module.exports = {
           age: 32,
           weight: 87,
           height: 1.87,
-          email: 'roos@email.com',
+          email: 'ross@email.com',
           created_at: new Date(),
           updated_at: new Date(),
         },
