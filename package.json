@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./server.js"
+    "dev": "nodemon ./server.js",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "start": "node ./dist/server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
