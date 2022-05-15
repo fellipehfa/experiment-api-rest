@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import Student from '../models/Student';
 import User from '../models/User';
+import Picture from '../models/Picture';
 
 class StudentsController {
   async create(req, res) {
@@ -18,6 +19,14 @@ class StudentsController {
   async list(req, res) {
     try {
       const { lastName, email } = req.query;
+      const format = {
+        order: ['first_name', 'last_name', [Picture, 'id', 'DESC']],
+        include: {
+          model: Picture,
+          attributes: ['id', 'file_name', 'original_name', 'url'],
+        },
+      };
+
       if (email) {
         const students = await Student.findAll({ where: { email: { [Op.like]: `%${email}%` } } });
         if (students.length === 0) return res.status(404).json({ error: 'Student not found' });
@@ -30,7 +39,7 @@ class StudentsController {
 
         return res.status(200).json(students);
       }
-      const students = await Student.findAll();
+      const students = await Student.findAll(format);
       if (students.length === 0) return res.status(404).json({ error: 'Student not found' });
 
       res.status(200).json(students);

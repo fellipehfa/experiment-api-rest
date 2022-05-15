@@ -44,7 +44,6 @@ export default class User extends Model {
         },
         active: {
           type: Sequelize.BOOLEAN,
-          allowNull: false,
           defaultValue: true,
         },
       },

@@ -10,10 +10,10 @@ export default {
   },
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/');
+      cb(null, 'uploads/images/');
     },
     filename: (req, file, cb) => {
-      const fileName = `${Date.now()}-${utils.slugify(file.originalname.split('.')[0])}.${file.originalname.split('.')[1]}`;
+      const fileName = `${Date.now()}_${utils.slugify(file.originalname.split('.')[0])}.${file.originalname.split('.')[1]}`;
       cb(null, fileName);
     },
   }),
