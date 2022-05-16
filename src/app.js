@@ -23,7 +23,7 @@ class App {
   }
 
   routes() {
-    this.app.use('/', (req, res) => res.send('Hello World'));
+    this.app.use('/home', (req, res) => res.send('Hello World'));
     this.app.use('/students', studentsRoutes);
     this.app.use('/users', usersRoutes);
     this.app.use('/pictures', picturesRoutes);
