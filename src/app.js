@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ class App {
   middlewares() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
-    this.app.use('/images', express.static('../uploads/images'));
+    this.app.use('/images', express.static(path.join(__dirname, '..', '/uploads', '/images')));
   }
 
   routes() {
